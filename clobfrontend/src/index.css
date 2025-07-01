@@ -72,6 +72,9 @@ button:focus-visible {
   width: 30%;
 }
 
+.text-custom-green{
+  color: #07FF07;
+}
 .bg-custom-blue{
   background-color: rgba(13, 122, 176, 0.2);
   /* opacity: 70%; */
