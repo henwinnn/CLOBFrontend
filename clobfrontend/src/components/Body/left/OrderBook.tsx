@@ -48,19 +48,19 @@ const OrderBook = () => {
           <div key={i} className="grid grid-cols-4 py-1 text-white relative">
             {Number(row.buyAmount) > 0 && (
               <div
-                className="absolute h-full left-0 top-0 bg-green-900 opacity-20"
+                className="absolute h-full right-1/2 top-0 bg-green-900 opacity-20"
                 style={{ width: `${buyPercent}%` }}
               />
             )}
             {Number(row.buyAmount) > 0 && (
               <div
-                className="absolute h-full right-0 top-0 bg-red-900 opacity-20"
+                className="absolute h-full left-1/2 top-0 bg-red-900 opacity-20"
                 style={{ width: `${sellPercent}%` }}
               />
             )}
             <div className="text-left">{row.buyAmount}</div>
-            <div className="text-green-400 text-center">{row.buyPrice}</div>
-            <div className="text-red-400 text-center">{row.sellPrice}</div>
+            <div className="text-green-600 text-center">{row.buyPrice}</div>
+            <div className="text-red-600 text-center">{row.sellPrice}</div>
             <div className="text-right">{row.sellAmount}</div>
           </div>
         );

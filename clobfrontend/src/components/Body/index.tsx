@@ -5,7 +5,7 @@ import History from "./History";
 
 function Body() {
   return (
-    <div className="">
+    <div className="px-13">
       <div className=" flex justify-between px-4">
         <Left />
         <Right />

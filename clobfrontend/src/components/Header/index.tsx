@@ -3,7 +3,7 @@ import "tailwindcss";
 
 function Header() {
   return (
-    <div className="background-red h-30 flex items-center justify-between px-4">
+    <div className="background-red h-30 flex items-center justify-between px-24">
       <div className="imageLogo h-10">image</div>
       <div>
         <ConnectButton />
