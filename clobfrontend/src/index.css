@@ -38,7 +38,7 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+/* button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -48,7 +48,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-}
+} */
 button:hover {
   border-color: #646cff;
 }
@@ -68,6 +68,43 @@ button:focus-visible {
 
 .width30 {
   width: 30%;
+}
+
+.bg-custom-blue{
+  background-color: rgba(13, 122, 176, 0.2);
+  /* opacity: 70%; */
+}
+
+.monadLogo{
+  content:url(../src/assets/monad.png);
+  /* width: 100%; */
+}
+
+.usdcLogo{
+  content:url(../src/assets/usdc.png);
+  /* width: 100%; */
+}
+
+.swapIcon{
+  content:url(../src/assets/swapIcon.png);
+  width: 30px;
+  height: 30px;
+}
+.arrow{
+  content:url(../src/assets/arrow.png);
+  width: 20px;
+  height: 20px;
+}
+.number-input-styled::-webkit-outer-spin-button,
+.number-input-styled::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M7 14l5-5 5 5z"/></svg>') no-repeat center;
+  width: 20px;
+  height: 20px;
+}
+
+.outline0 {
+  outline: none !important;
 }
 
 @media (prefers-color-scheme: light) {

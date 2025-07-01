@@ -1,9 +1,23 @@
 import "tailwindcss";
+import InputMarket from "./inputMarket";
+import Swap from "./Swap";
 
 function Right() {
   return (
-    <div className="width30 bg-amber-700 h-30 flex items-center justify-between px-4">
-      ini Right
+    <div className="width30 h-full rounded  p-4">
+      <div className="text-left">
+        <span>Mon at Rate </span>
+        <span>(0.01%)</span>
+        <div className="mb-4">
+          <span>Set to market rate </span>
+          <span className="rounded bg-red-500 p-1 text-w text-xs">ASK</span>
+        </div>
+
+        <InputMarket />
+      </div>
+      <div>
+        <Swap />
+      </div>
     </div>
   );
 }
