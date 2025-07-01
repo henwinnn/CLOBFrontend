@@ -1,7 +1,12 @@
 import "tailwindcss";
+import Top from "./top";
 
 function History() {
-  return <div className="width30 h-full rounded  p-4">Ini history</div>;
+  return (
+    <div>
+      <Top />
+    </div>
+  );
 }
 
 export default History;

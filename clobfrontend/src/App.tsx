@@ -17,9 +17,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider>
             <Header />
-
             <Body />
-
             <Toaster />
           </RainbowKitProvider>
         </QueryClientProvider>
