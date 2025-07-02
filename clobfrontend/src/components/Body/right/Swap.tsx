@@ -1,10 +1,3 @@
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  MenuItem,
-  Select,
-} from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useState } from "react";
 import "tailwindcss";
@@ -12,6 +5,42 @@ import { useAccount } from "wagmi";
 
 function Swap() {
   const { isConnected } = useAccount();
+  const [payToken, setPayToken] = useState("MON");
+  const [receiveToken, setReceiveToken] = useState("USDC");
+  const [payAmount, setPayAmount] = useState("");
+  const [receiveAmount, setReceiveAmount] = useState("");
+  const [showPayDropdown, setShowPayDropdown] = useState(false);
+  const [showReceiveDropdown, setShowReceiveDropdown] = useState(false);
+
+  const tokens = ["MON", "USDC", "ETH", "BTC"];
+
+  const handleSwapTokens = () => {
+    const tempPayToken = payToken;
+    const tempPayAmount = payAmount;
+
+    setPayToken(receiveToken);
+    setReceiveToken(tempPayToken);
+    setPayAmount(receiveAmount);
+    setReceiveAmount(tempPayAmount);
+  };
+
+  const handlePayTokenSelect = (token) => {
+    setPayToken(token);
+    setShowPayDropdown(false);
+    // Auto switch receive token if same as pay token
+    if (token === receiveToken) {
+      setReceiveToken(payToken);
+    }
+  };
+
+  const handleReceiveTokenSelect = (token) => {
+    setReceiveToken(token);
+    setShowReceiveDropdown(false);
+    // Auto switch pay token if same as receive token
+    if (token === payToken) {
+      setPayToken(receiveToken);
+    }
+  };
 
   return (
     <div className="font-sans">
@@ -22,17 +51,45 @@ function Swap() {
           <div className="justify-between flex mt-4 items-center">
             <input
               type="number"
+              value={payAmount}
+              onChange={(e) => setPayAmount(e.target.value)}
               className="flex outline-0 pl-4 w-2/3 text-3xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
               placeholder="0.00"
             />
-            <div className="px-4">
-              <div className="flex bg-white rounded-4xl items-center text-black h-5 p-2">
-                <div className="monadLogo" />
+            <div className="px-4 relative">
+              <div
+                className="flex bg-white rounded-4xl items-center text-black h-5 p-2 cursor-pointer"
+                onClick={() => setShowPayDropdown(!showPayDropdown)}
+              >
+                <div
+                  className={payToken === "MON" ? "monadLogo" : "usdcLogo"}
+                />
                 <div className="flex items-center ml-1 gap-1 content-center justify-between w-full">
-                  <span className="">MON</span>
+                  <span className="">{payToken}</span>
                   <span className="arrow" />
                 </div>
               </div>
+
+              {showPayDropdown && (
+                <div className="absolute top-full mt-1 right-0 bg-white rounded-lg shadow-lg border z-10 min-w-20">
+                  {tokens
+                    .filter((token) => token !== receiveToken)
+                    .map((token) => (
+                      <div
+                        key={token}
+                        className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer text-black"
+                        onClick={() => handlePayTokenSelect(token)}
+                      >
+                        <div
+                          className={
+                            token === "MON" ? "monadLogo mr-2" : "usdcLogo mr-2"
+                          }
+                        />
+                        <span>{token}</span>
+                      </div>
+                    ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="flex justify-between text-size10 items-start px-4">
@@ -48,7 +105,10 @@ function Swap() {
       </div>
 
       <div className="flex justify-center mt-4">
-        <div className="swapIcon" />
+        <div
+          className="swapIcon cursor-pointer hover:opacity-75 transition-opacity"
+          onClick={handleSwapTokens}
+        />
       </div>
 
       <div className="">
@@ -58,17 +118,45 @@ function Swap() {
           <div className="justify-between flex mt-4 items-center">
             <input
               type="number"
+              value={receiveAmount}
+              onChange={(e) => setReceiveAmount(e.target.value)}
               className="flex outline-0 pl-4 w-2/3 text-3xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
               placeholder="0.00"
             />
-            <div className="px-4">
-              <div className="flex bg-white rounded-4xl items-center text-black h-5 p-2">
-                <div className="usdcLogo" />
+            <div className="px-4 relative">
+              <div
+                className="flex bg-white rounded-4xl items-center text-black h-5 p-2 cursor-pointer"
+                onClick={() => setShowReceiveDropdown(!showReceiveDropdown)}
+              >
+                <div
+                  className={receiveToken === "USDC" ? "usdcLogo" : "monadLogo"}
+                />
                 <div className="flex items-center ml-1 gap-1 content-center justify-between w-full">
-                  <span className="">USDC</span>
+                  <span className="">{receiveToken}</span>
                   <span className="arrow" />
                 </div>
               </div>
+
+              {showReceiveDropdown && (
+                <div className="absolute top-full mt-1 right-0 bg-white rounded-lg shadow-lg border z-10 min-w-20">
+                  {tokens
+                    .filter((token) => token !== payToken)
+                    .map((token) => (
+                      <div
+                        key={token}
+                        className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer text-black"
+                        onClick={() => handleReceiveTokenSelect(token)}
+                      >
+                        <div
+                          className={
+                            token === "MON" ? "monadLogo mr-2" : "usdcLogo mr-2"
+                          }
+                        />
+                        <span>{token}</span>
+                      </div>
+                    ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="flex justify-between text-size10 items-start px-4">
