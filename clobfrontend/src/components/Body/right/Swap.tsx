@@ -172,13 +172,20 @@ function Swap() {
       </div>
 
       {isConnected ? (
-        <button className="flex bg-white rounded-2xl justify-center h-10 w-full text-black items-center mt-4">
+        <button className="flex bg-white rounded justify-center h-10 w-full text-black items-center mt-4">
           Swap
         </button>
       ) : (
-        <div className="flex justify-center content-center items-center mt-4">
-          <ConnectButton />
-        </div>
+        <ConnectButton.Custom>
+          {({ openConnectModal }) => (
+            <button
+              onClick={openConnectModal}
+              className="w-full h-10 bg-white text-black rounded mt-4 hover:bg-custom-grey transition-colors"
+            >
+              Connect Wallet
+            </button>
+          )}
+        </ConnectButton.Custom>
       )}
     </div>
   );
