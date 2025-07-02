@@ -11,6 +11,9 @@ function Top() {
             <Checkbox
               sx={{
                 color: "white",
+                "&.Mui-checked": {
+                  color: "white",
+                },
               }}
             />
           }
