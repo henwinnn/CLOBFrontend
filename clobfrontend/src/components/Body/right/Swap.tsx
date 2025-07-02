@@ -24,7 +24,7 @@ function Swap() {
     setReceiveAmount(tempPayAmount);
   };
 
-  const handlePayTokenSelect = (token) => {
+  const handlePayTokenSelect = (token: string) => {
     setPayToken(token);
     setShowPayDropdown(false);
     // Auto switch receive token if same as pay token
@@ -33,7 +33,7 @@ function Swap() {
     }
   };
 
-  const handleReceiveTokenSelect = (token) => {
+  const handleReceiveTokenSelect = (token: string) => {
     setReceiveToken(token);
     setShowReceiveDropdown(false);
     // Auto switch pay token if same as receive token
