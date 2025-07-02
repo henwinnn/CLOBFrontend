@@ -4,8 +4,8 @@ import { Button } from "@mui/material";
 
 function MarketOrder() {
   return (
-    <div className="flex flex-row w-full gap-1.5 h-11 bg-custom-grey text-black items-center justify-center rounded p-4">
-      <div className="font-bold width6Row">
+    <div className="flex flex-row w-full gap-1.5 h-11 text-white items-center justify-between border-t border-gray-700 mt-1">
+      <div className="font-bold width6Row text-left">
         <span>USDC</span>
         <span>
           <ArrowForwardIcon fontSize="small" />

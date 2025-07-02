@@ -6,8 +6,8 @@ export default function TableMarket() {
   return (
     <div>
       {/* market order header */}
-      <div className="flex flex-row w-full gap-1.5 items-center justify-center rounded p-4">
-        <div className="font-bold width6Row">Market</div>
+      <div className="flex flex-row w-full gap-1.5 items-center justify-between rounded">
+        <div className="font-bold width6Row text-left">Market</div>
         <div className="font-bold width6Row">Price</div>
         <div className="font-bold width6Row">Amount</div>
         <div className="font-bold width6Row">Filled</div>

@@ -11,7 +11,7 @@ import "tailwindcss";
 
 function Top() {
   return (
-    <div className="flex items-center justify-between rounded p-4 ">
+    <div className="flex items-center justify-between rounded">
       <FormGroup className="w-fit ">
         <FormControlLabel
           control={
@@ -25,7 +25,7 @@ function Top() {
         />
       </FormGroup>
 
-      <div className="material-icons-outlined mr-70 ">
+      <div className="material-icons-outlined">
         <Paper
           component="form"
           sx={{
@@ -34,15 +34,19 @@ function Top() {
             alignItems: "center",
             width: 216,
             height: 28,
-            backgroundColor: "#0d7ab0",
+            backgroundColor: "#364153",
             color: "white",
           }}
         >
-          <IconButton disabled sx={{ p: "10px" }} aria-label="search">
+          <IconButton
+            disabled
+            sx={{ p: "10px", color: "white" }}
+            aria-label="search"
+          >
             <SearchIcon />
           </IconButton>
           <InputBase
-            sx={{ ml: 1, flex: 1 }}
+            sx={{ ml: 1, flex: 1, color: "white" }}
             placeholder="Search"
             inputProps={{ "aria-label": "search google maps" }}
           />

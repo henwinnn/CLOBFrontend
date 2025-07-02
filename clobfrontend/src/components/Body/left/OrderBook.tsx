@@ -32,12 +32,12 @@ const OrderBook = () => {
   }));
 
   return (
-    <div className="bg-zinc-900 h-[507px] rounded-lg p-4 w-full overflow-y-auto flex flex-col justify-start text-sm">
+    <div className="bg-gray-800 h-[507px] rounded-lg p-4 w-full overflow-y-auto flex flex-col justify-start text-sm">
       <div className="grid grid-cols-4 font-medium text-gray-400 pb-2 border-b border-gray-700">
-        <div>Amount</div>
-        <div className="text-center">Price</div>
-        <div className="text-center">Price</div>
-        <div className="text-right">Amount</div>
+        <div className="text-left font-bold text-white">Amount</div>
+        <div className="text-center font-bold text-white">Price</div>
+        <div className="text-center font-bold text-white">Price</div>
+        <div className="text-right font-bold text-white">Amount</div>
       </div>
 
       {rows.map((row, i) => {
@@ -48,19 +48,19 @@ const OrderBook = () => {
           <div key={i} className="grid grid-cols-4 py-1 text-white relative">
             {Number(row.buyAmount) > 0 && (
               <div
-                className="absolute h-full right-1/2 top-0 bg-green-900 opacity-20"
+                className="absolute h-full right-1/2 top-0 bg-green-500/20"
                 style={{ width: `${buyPercent}%` }}
               />
             )}
             {Number(row.buyAmount) > 0 && (
               <div
-                className="absolute h-full left-1/2 top-0 bg-red-900 opacity-20"
+                className="absolute h-full left-1/2 top-0 bg-red-500/20"
                 style={{ width: `${sellPercent}%` }}
               />
             )}
             <div className="text-left">{row.buyAmount}</div>
-            <div className="text-green-600 text-center">{row.buyPrice}</div>
-            <div className="text-red-600 text-center">{row.sellPrice}</div>
+            <div className="text-green-500 text-center">{row.buyPrice}</div>
+            <div className="text-red-500 text-center">{row.sellPrice}</div>
             <div className="text-right">{row.sellAmount}</div>
           </div>
         );

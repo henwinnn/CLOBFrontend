@@ -4,7 +4,7 @@ import TableMarket from "./Table";
 
 function History() {
   return (
-    <div className="mx-4 mt-3 rounded-2xl bg-zinc-900">
+    <div className="mx-12 my-4 p-4 rounded-2xl bg-gray-800">
       <Top />
       <TableMarket />
     </div>
