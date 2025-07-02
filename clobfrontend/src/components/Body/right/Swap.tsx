@@ -180,7 +180,7 @@ function Swap() {
           {({ openConnectModal }) => (
             <button
               onClick={openConnectModal}
-              className="w-full h-16 bg-white text-black rounded mt-4 hover:bg-custom-grey transition-colors"
+              className="w-full h-16 bg-custom-blue-2 font-bold text-white rounded mt-4 hover:bg-custom-blue transition-colors"
             >
               Connect Wallet
             </button>
