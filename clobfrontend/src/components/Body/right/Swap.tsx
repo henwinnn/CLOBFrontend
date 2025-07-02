@@ -1,36 +1,47 @@
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useState } from "react";
 import "tailwindcss";
 import { useAccount } from "wagmi";
 
 function Swap() {
   const { isConnected } = useAccount();
-  return (
-    <div>
-      <div className="">
-        <span className="text-left flex">Pay</span>
 
-        <div className="bg-custom-blue rounded-2xl">
-          <div className="justify-between h-15 flex items-center">
+  return (
+    <div className="font-sans">
+      <div className="">
+        <span className="text-left flex mb-3">Pay</span>
+
+        <div className="bg-custom-blue h-20 rounded-2xl content-center items-center">
+          <div className="justify-between flex mt-4 items-center">
             <input
               type="number"
-              className="flex outline-0 pl-4 w-2/3 h-16 text-4xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+              className="flex outline-0 pl-4 w-2/3 text-3xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
               placeholder="0.00"
             />
             <div className="px-4">
-              <div className="flex bg-white rounded-4xl text-black h-11 p-2">
+              <div className="flex bg-white rounded-4xl items-center text-black h-5 p-2">
                 <div className="monadLogo" />
-                <div className="flex items-center ml-1 gap-1 justify-between w-full">
+                <div className="flex items-center ml-1 gap-1 content-center justify-between w-full">
                   <span className="">MON</span>
                   <span className="arrow" />
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex h-15 justify-between items-start px-4 mt-3">
+          <div className="flex justify-between text-size10 items-start px-4">
             <div>$0.0</div>
-            <div>
+            <div className="flex items-center gap-2">
               <span>Available: 1000 </span>
-              <button className="rounded bg-white text-black p-1">MAX</button>
+              <button className="rounded flex items-center bg-white h-3.5 text-black p-1">
+                MAX
+              </button>
             </div>
           </div>
         </div>
@@ -41,30 +52,32 @@ function Swap() {
       </div>
 
       <div className="">
-        <span className="text-left flex">Receive</span>
+        <span className="text-left flex mb-3">Receive</span>
 
-        <div className="bg-custom-blue rounded-2xl">
-          <div className="justify-between h-15 flex items-center">
+        <div className="bg-custom-blue h-20 rounded-2xl content-center items-center">
+          <div className="justify-between flex mt-4 items-center">
             <input
               type="number"
-              className="flex outline-0 pl-4 w-2/3 h-16 text-4xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+              className="flex outline-0 pl-4 w-2/3 text-3xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
               placeholder="0.00"
             />
             <div className="px-4">
-              <div className="flex bg-white rounded-4xl text-black h-11 p-2">
+              <div className="flex bg-white rounded-4xl items-center text-black h-5 p-2">
                 <div className="usdcLogo" />
-                <div className="flex items-center ml-1 gap-1 justify-between w-full">
+                <div className="flex items-center ml-1 gap-1 content-center justify-between w-full">
                   <span className="">USDC</span>
                   <span className="arrow" />
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex h-15 justify-between items-start px-4 mt-3">
+          <div className="flex justify-between text-size10 items-start px-4">
             <div>$0.0</div>
-            <div>
+            <div className="flex items-center gap-2">
               <span>Available: 1000 </span>
-              <button className="rounded bg-white text-black p-1">MAX</button>
+              <button className="rounded flex items-center bg-white h-3.5 text-black p-1">
+                MAX
+              </button>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import "./App.css";
-import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { darkTheme, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { Toaster } from "react-hot-toast";
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -10,12 +10,19 @@ import Body from "./components/Body";
 
 const queryClient = new QueryClient();
 
+const customTheme = darkTheme({
+  accentColor: "#0d7ab0",
+  accentColorForeground: "white",
+  borderRadius: "large",
+  fontStack: "system",
+});
+
 function App() {
   return (
     <>
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
-          <RainbowKitProvider>
+          <RainbowKitProvider theme={customTheme}>
             <Header />
             <Body />
             <Toaster />
