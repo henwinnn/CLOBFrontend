@@ -47,18 +47,18 @@ function Swap() {
       <div className="">
         <span className="text-left flex mb-3">Pay</span>
 
-        <div className="bg-custom-blue h-20 rounded-2xl content-center items-center">
+        <div className="bg-custom-blue h-full rounded-2xl content-center items-center">
           <div className="justify-between flex mt-4 items-center">
             <input
               type="number"
               value={payAmount}
               onChange={(e) => setPayAmount(e.target.value)}
-              className="flex outline-0 pl-4 w-2/3 text-3xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+              className="flex h-14  outline-0 pl-4 w-2/3 text-3xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
               placeholder="0.00"
             />
             <div className="px-4 relative">
               <div
-                className="flex bg-white rounded-4xl items-center text-black h-5 p-2 cursor-pointer"
+                className="flex bg-white rounded-4xl items-center text-black  p-2 cursor-pointer"
                 onClick={() => setShowPayDropdown(!showPayDropdown)}
               >
                 <div
@@ -92,11 +92,11 @@ function Swap() {
               )}
             </div>
           </div>
-          <div className="flex justify-between text-size10 items-start px-4">
+          <div className="flex h-14  justify-between  items-start px-4">
             <div>$0.0</div>
             <div className="flex items-center gap-2">
               <span>Available: 1000 </span>
-              <button className="rounded flex items-center bg-white h-3.5 text-black p-1">
+              <button className="rounded flex items-center bg-white  text-black p-1">
                 MAX
               </button>
             </div>
@@ -114,18 +114,18 @@ function Swap() {
       <div className="">
         <span className="text-left flex mb-3">Receive</span>
 
-        <div className="bg-custom-blue h-20 rounded-2xl content-center items-center">
+        <div className="bg-custom-blue h-full rounded-2xl content-center items-center">
           <div className="justify-between flex mt-4 items-center">
             <input
               type="number"
               value={receiveAmount}
               onChange={(e) => setReceiveAmount(e.target.value)}
-              className="flex outline-0 pl-4 w-2/3 text-3xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+              className="flex h-14  outline-0 pl-4 w-2/3 text-3xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
               placeholder="0.00"
             />
             <div className="px-4 relative">
               <div
-                className="flex bg-white rounded-4xl items-center text-black h-5 p-2 cursor-pointer"
+                className="flex bg-white rounded-4xl items-center text-black  p-2 cursor-pointer"
                 onClick={() => setShowReceiveDropdown(!showReceiveDropdown)}
               >
                 <div
@@ -159,11 +159,11 @@ function Swap() {
               )}
             </div>
           </div>
-          <div className="flex justify-between text-size10 items-start px-4">
+          <div className="flex h-14  justify-between  items-start px-4">
             <div>$0.0</div>
             <div className="flex items-center gap-2">
               <span>Available: 1000 </span>
-              <button className="rounded flex items-center bg-white h-3.5 text-black p-1">
+              <button className="rounded flex items-center bg-white  text-black p-1">
                 MAX
               </button>
             </div>
@@ -172,7 +172,7 @@ function Swap() {
       </div>
 
       {isConnected ? (
-        <button className="flex bg-white rounded justify-center h-10 w-full text-black items-center mt-4">
+        <button className="flex bg-white rounded justify-center h-16 w-full text-black items-center mt-4">
           Swap
         </button>
       ) : (
@@ -180,7 +180,7 @@ function Swap() {
           {({ openConnectModal }) => (
             <button
               onClick={openConnectModal}
-              className="w-full h-10 bg-white text-black rounded mt-4 hover:bg-custom-grey transition-colors"
+              className="w-full h-16 bg-white text-black rounded mt-4 hover:bg-custom-grey transition-colors"
             >
               Connect Wallet
             </button>
