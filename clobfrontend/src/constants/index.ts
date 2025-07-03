@@ -4,24 +4,22 @@ export const ERC20_ABI = ERC20_ABI_JSON;
 
 // Contract addresses dari environment variables
 export const CONTRACTS = {
-  MOCK_USDC: "0xce0ee4a71691cc2a3784126cbb5bed5dcf5e1987",
-  RUG: "0x3974A994dD49a9b87C3E5887aAaCbD973c688245",
+  USDC: "0x9ac4f086840561b014130d3cb5F43646BAC8AaD7",
+  BTC: "0x43Baf4b67F2c7c274f4E1C9E7a8100d087f56Cb3",
 } as const;
 
 // Token configurations
 export const TOKENS = {
   USDC: {
-    address: CONTRACTS.MOCK_USDC,
+    address: CONTRACTS.USDC,
     symbol: "USDC",
     name: "Mock USDC",
     decimals: 6,
-    logo: "💵",
   },
   RUG: {
-    address: CONTRACTS.RUG,
+    address: CONTRACTS.BTC,
     symbol: "RUG",
     name: "RUG",
-    decimals: 18,
-    logo: "💵",
+    decimals: 8,
   },
 } as const;
