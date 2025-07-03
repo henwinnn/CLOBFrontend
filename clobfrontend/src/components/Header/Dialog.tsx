@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { TOKENS } from "../../constants";
 import { useTokenBalance } from "../../hooks/useReadGetBalance";
+import { useDeposit } from "../../hooks/useWriteDeposit";
+import { useReadGetDepositBalance } from "../../hooks/useReadDepositBalance";
+import { useWithdraw } from "../../hooks/useWriteWithdraw";
 
 type TokenSymbol = keyof typeof TOKENS;
 
@@ -18,13 +21,31 @@ function Dialog({ open, setOpen, title, onConfirm }: DialogProps) {
   const [selectedSymbol, setSelectedSymbol] = useState<TokenSymbol>("USDC");
 
   const selectedToken = TOKENS[selectedSymbol];
-  const { balance } = useTokenBalance(selectedToken);
+  const { balance: depositBalance } = useTokenBalance(selectedToken);
+  const { balance: withdrawBalance } = useReadGetDepositBalance(
+    selectedToken.address
+  );
 
   const normalizedBalanceDeposit =
-    Number(balance) / 10 ** selectedToken.decimals || 0;
-  const normalizedBalanceWithdraw = 0;
+    Number(depositBalance) / 10 ** selectedToken.decimals || 0;
+  const normalizedBalanceWithdraw =
+    Number(withdrawBalance) / 10 ** selectedToken.decimals || 0;
   const normalizedBalance =
     title === "Deposit" ? normalizedBalanceDeposit : normalizedBalanceWithdraw;
+  const { deposit, isLoading: loadingDeposit } = useDeposit(selectedToken);
+  const { withdraw, isLoading: loadingWithdraw } = useWithdraw(selectedToken);
+
+  function handleDeposit() {
+    onConfirm(amount, selectedSymbol);
+    setOpen(false);
+    deposit(amount);
+  }
+
+  function handleWithdraw() {
+    onConfirm(amount, selectedSymbol);
+    setOpen(false);
+    withdraw(amount);
+  }
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -102,11 +123,13 @@ function Dialog({ open, setOpen, title, onConfirm }: DialogProps) {
         </div>
 
         <button
-          onClick={() => {
-            onConfirm(amount, selectedSymbol);
-            setOpen(false);
-          }}
-          disabled={!amount || parseFloat(amount) <= 0}
+          onClick={title === "Deposit" ? handleDeposit : handleWithdraw}
+          disabled={
+            !amount ||
+            loadingDeposit ||
+            loadingWithdraw ||
+            parseFloat(amount) <= 0
+          }
           className="w-full cursor-pointer bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-md transition-colors disabled:opacity-50"
         >
           {title}
