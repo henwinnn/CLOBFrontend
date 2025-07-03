@@ -2,17 +2,28 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useState } from "react";
 import "tailwindcss";
 import { useAccount } from "wagmi";
+import { useReadGetDepositBalance } from "../../../hooks/useReadDepositBalance";
+import { TOKENS } from "../../../constants";
 
 function Swap() {
   const { isConnected } = useAccount();
-  const [payToken, setPayToken] = useState("MON");
-  const [receiveToken, setReceiveToken] = useState("USDC");
+  const [payToken, setPayToken] = useState("USDC");
+  const [receiveToken, setReceiveToken] = useState("BTC");
   const [payAmount, setPayAmount] = useState("");
   const [receiveAmount, setReceiveAmount] = useState("");
   const [showPayDropdown, setShowPayDropdown] = useState(false);
   const [showReceiveDropdown, setShowReceiveDropdown] = useState(false);
 
-  const tokens = ["MON", "USDC", "ETH", "BTC"];
+  const tokens = ["USDC", "BTC"];
+  const { balance: payTokenBalance } = useReadGetDepositBalance(
+    payToken === "USDC" ? TOKENS.USDC.address : TOKENS.BTC.address
+  );
+  const { balance: receiveTokenBalance } = useReadGetDepositBalance(
+    receiveToken === "USDC" ? TOKENS.USDC.address : TOKENS.BTC.address
+  );
+
+  console.log("Pay Token Balance:", payTokenBalance);
+  console.log("Receive Token Balance:", receiveTokenBalance);
 
   const handleSwapTokens = () => {
     const tempPayToken = payToken;
@@ -95,7 +106,7 @@ function Swap() {
           <div className="flex h-14  justify-between  items-start px-4">
             <div>$0.0</div>
             <div className="flex items-center gap-2">
-              <span>Available: 1000 </span>
+              <span>Available: {payTokenBalance} </span>
               <button className="rounded flex items-center bg-white  text-black p-1">
                 MAX
               </button>
@@ -162,7 +173,7 @@ function Swap() {
           <div className="flex h-14  justify-between  items-start px-4">
             <div>$0.0</div>
             <div className="flex items-center gap-2">
-              <span>Available: 1000 </span>
+              <span>Available: {receiveTokenBalance} </span>
               <button className="rounded flex items-center bg-white  text-black p-1">
                 MAX
               </button>
