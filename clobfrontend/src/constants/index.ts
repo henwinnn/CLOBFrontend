@@ -16,10 +16,10 @@ export const TOKENS = {
     name: "Mock USDC",
     decimals: 6,
   },
-  RUG: {
+  BTC: {
     address: CONTRACTS.BTC,
-    symbol: "RUG",
-    name: "RUG",
+    symbol: "BTC",
+    name: "BTC",
     decimals: 8,
   },
 } as const;
