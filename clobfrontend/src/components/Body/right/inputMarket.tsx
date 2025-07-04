@@ -1,10 +1,7 @@
 import "tailwindcss";
 import poligonBlack from "../../../assets/poligonBlack.png";
-import { useState } from "react";
 
-function InputMarket() {
-  const [value, setValue] = useState("");
-
+function InputMarket({ value, setValue }) {
   const increment = () => {
     const currentValue = parseFloat(value) || 0;
     setValue((currentValue + 0.01).toFixed(2));
@@ -14,6 +11,7 @@ function InputMarket() {
     const currentValue = parseFloat(value) || 0;
     setValue(Math.max(0, currentValue - 0.01).toFixed(2));
   };
+
   return (
     <div className="relative mb-5">
       <input

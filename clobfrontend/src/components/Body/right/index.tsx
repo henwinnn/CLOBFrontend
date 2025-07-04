@@ -1,8 +1,11 @@
 import "tailwindcss";
 import InputMarket from "./inputMarket";
 import Swap from "./Swap";
+import { useState } from "react";
 
 function Right() {
+  const [value, setValue] = useState("");
+
   return (
     <div className="width30 h-full rounded text-white  ml-3 p-4">
       <div className="text-left">
@@ -13,10 +16,10 @@ function Right() {
           <span className="rounded10px bgRed30 h-3 px-3 text-xs">ASK</span>
         </div>
 
-        <InputMarket />
+        <InputMarket value={value} setValue={setValue} />
       </div>
       <div>
-        <Swap />
+        <Swap value={value} />
       </div>
     </div>
   );
