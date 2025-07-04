@@ -1,8 +1,11 @@
 import { Button } from "@mui/material";
 import "tailwindcss";
 import MarketOrder from "./MarketOrder";
+import { useHistoryOrder } from "../../../hooks/useFetchHistoryOrder";
+import type { ItemHistoryOrder } from "../../../types/types";
 
 export default function TableMarket() {
+  const { data: dataHistory } = useHistoryOrder();
   return (
     <div>
       {/* market order header */}
@@ -11,7 +14,7 @@ export default function TableMarket() {
         <div className="font-bold width6Row">Price</div>
         <div className="font-bold width6Row">Amount</div>
         <div className="font-bold width6Row">Filled</div>
-        <div className="font-bold width6Row">Claimable</div>
+        <div className="font-bold width6Row">Bid/Ask</div>
         <div className="font-bold width6Row">
           <Button
             variant="contained"
@@ -37,7 +40,10 @@ export default function TableMarket() {
       </div>
 
       {/* mapping the market order */}
-      <MarketOrder />
+
+      {dataHistory?.items?.map((item: ItemHistoryOrder, index: number) => {
+        return <MarketOrder key={index} {...item} />;
+      })}
     </div>
   );
 }

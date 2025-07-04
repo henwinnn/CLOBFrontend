@@ -2,18 +2,48 @@ import "tailwindcss";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Button } from "@mui/material";
+import { getTokenName } from "../../../constants";
 
-function MarketOrder() {
+function MarketOrder({
+  amount,
+  bidAskType,
+  filled,
+  // id,
+  // isActive,
+  price,
+  // remaining,
+  // status,
+  // timestamp,
+  tokenBuy,
+  tokenSell,
+}: // user,
+{
+  amount: string;
+  bidAskType: string;
+  filled: string;
+  id: string;
+  isActive: boolean;
+  price: string;
+  remaining: string;
+  status: string;
+  timestamp: string;
+  tokenBuy: string;
+  tokenSell: string;
+  user: string;
+}) {
+  const BidName = bidAskType === "0" ? "Bid" : "Ask";
+  const buyToken = getTokenName(tokenBuy);
+  const sellToken = getTokenName(tokenSell);
   return (
     <div className="flex flex-row w-full  text-align-last  h-11 text-white items-center border-t  mt-1">
       <div className="flex flex-row text-center items-center font-sans text-black w-full">
         <div className="justify-center flex gap-3.5 width6Row">
-          <div className="">USDC</div>
+          <div className="">{sellToken}</div>
           <div>
             <ArrowForwardIcon fontSize="small" />
           </div>
           <div className="font-bold font-sans">
-            <span className="italic">MON</span>
+            <span className="italic">{buyToken}</span>
           </div>
         </div>
         <div className="width6Row flex gap-3 justify-center">
@@ -21,15 +51,17 @@ function MarketOrder() {
             <OpenInNewIcon fontSize="small" />
           </div>
           <div>
-            <span>1.234</span>
+            <span>{price}</span>
           </div>
         </div>
-        <div className=" width6Row">1.234</div>
-        <div className="width6Row">16.31%</div>
+        <div className=" width6Row">{amount}</div>
         <div className="width6Row">
-          <span>0.09 </span>
+          {((parseFloat(filled) / parseFloat(amount)) * 100).toFixed(2)}%
+        </div>
+        <div className="width6Row">
+          <span>{BidName} </span>
 
-          <span className="font-bold italic">MON</span>
+          {/* <span className="font-bold italic"></span> */}
         </div>
         <div className="font-bold width6Row">
           <Button
