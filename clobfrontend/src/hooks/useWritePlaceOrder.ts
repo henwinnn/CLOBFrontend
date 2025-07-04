@@ -30,7 +30,7 @@ export const useWritePlaceOrder = (
 
     try {
       const parsedPrice = parseFloat(price);
-      const parsedAmount = parseTokenAmount(amount, 18); // Assuming 18 decimals for simplicity
+      const parsedAmount = parseTokenAmount(amount, 8); // Assuming 18 decimals for simplicity
       //   if (allowance < parsedAmount) {
       //     await approveToken(tokenBuy, parsedAmount);
       //     toast.loading("Depositing...", { id: "deposit" });
