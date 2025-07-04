@@ -1,5 +1,5 @@
 import "tailwindcss";
-import poligonWhite from "../../../assets/poligonWhite.png";
+import poligonBlack from "../../../assets/poligonBlack.png";
 import { useState } from "react";
 
 function InputMarket() {
@@ -20,18 +20,18 @@ function InputMarket() {
         type="number"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="bg-custom-blue w-full h-16 text-4xl rounded-2xl px-4 pr-12 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+        className="bg-white text-black w-full h-12 text-4xl rounded-2xl px-4 pr-12 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
         placeholder="0.00"
       />
       <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex flex-col space-y-1 px-4">
         <button
           onClick={increment}
-          className="hover:opacity-75 transition-opacity outline0"
+          className="hover:opacity-75 transition-opacity outline0 "
         >
           <img
-            src={poligonWhite}
+            src={poligonBlack}
             alt="increase"
-            className="w-4 h-4 transform rotate-0 outline0"
+            className="iconInput transform rotate-0 outline0"
           />
         </button>
         <button
@@ -39,9 +39,9 @@ function InputMarket() {
           className="hover:opacity-75 transition-opacity outline0"
         >
           <img
-            src={poligonWhite}
+            src={poligonBlack}
             alt="decrease"
-            className="w-4 h-4 transform rotate-180"
+            className="iconInput transform rotate-180"
           />
         </button>
       </div>

@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@layer theme, base, mui, components, utilities;
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -8,7 +8,8 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* background-color: #242424; */
+  background-color: rgb(15 23 42);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,6 +32,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: "Geist Mono", monospace;
 }
 
 h1 {
@@ -57,8 +59,10 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.imageLogo{
-  content:url(../src/assets/logo.png);
+.imageLogo {
+  content: url(../src/assets/logo2.png);
+  /* width: 210px; */
+  height: 48px;
   /* width: 100%; */
 }
 
@@ -69,42 +73,79 @@ button:focus-visible {
 .width30 {
   width: 30%;
 }
-
-.bg-custom-blue{
+.rounded8px{
+  border-radius: 5px;
+}
+.rounded10px{
+  border-radius: 10px;
+}
+.bgRed30{
+  background-color: rgba(255, 0, 0, 0.5);
+}
+.text-custom-green {
+  color: #07ff07;
+}
+.bg-custom-blue {
   background-color: rgba(13, 122, 176, 0.2);
   /* opacity: 70%; */
 }
+.iconInput{
+  width: 18px;
+  height: 13px;
+  margin-bottom: -3px;
+}
+.text-size10{
+  font-size: 10px;
+}
 
-.monadLogo{
-  content:url(../src/assets/monad.png);
+.monadLogo {
+  content: url(../src/assets/monad.png);
+  width: 16px;
+  height: 16px;
   /* width: 100%; */
 }
 
-.usdcLogo{
-  content:url(../src/assets/usdc.png);
+.usdcLogo {
+  content: url(../src/assets/usdc.png);
+   width: 16px;
+  height: 16px;
   /* width: 100%; */
 }
 
-.swapIcon{
-  content:url(../src/assets/swapIcon.png);
+.swapIcon {
+  content: url(../src/assets/swapIcon.png);
   width: 30px;
   height: 30px;
 }
-.arrow{
-  content:url(../src/assets/arrow.png);
+.arrow {
+  content: url(../src/assets/arrow.png);
   width: 20px;
   height: 20px;
 }
 .number-input-styled::-webkit-outer-spin-button,
 .number-input-styled::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M7 14l5-5 5 5z"/></svg>') no-repeat center;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M7 14l5-5 5 5z"/></svg>')
+    no-repeat center;
   width: 20px;
   height: 20px;
 }
 
 .outline0 {
   outline: none !important;
+}
+.width6Row {
+  width: calc(100% / 6);
+}
+.bg-custom-grey {
+  background-color: #d9d9d9;
+}
+.text-align-last{
+  text-align-last: center;
+}
+
+.bg-custom-blue-2{
+  background-color: #0D7AB0;
 }
 
 @media (prefers-color-scheme: light) {
@@ -119,3 +160,5 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/*  */
