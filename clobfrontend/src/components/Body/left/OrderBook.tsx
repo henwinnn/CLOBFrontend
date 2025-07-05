@@ -30,12 +30,16 @@ const OrderBook = () => {
 
   const bidOrders =
     dataHistory?.items
-      ?.filter((order: ItemHistoryOrder) => order.bidAskType === "0")
+      ?.filter(
+        (order: ItemHistoryOrder) => order.bidAskType === "0" && order.isActive
+      )
       .map(formatOrder) ?? [];
 
   const askOrders =
     dataHistory?.items
-      ?.filter((order: ItemHistoryOrder) => order.bidAskType === "1")
+      ?.filter(
+        (order: ItemHistoryOrder) => order.bidAskType === "1" && order.isActive
+      )
       .map(formatOrder) ?? [];
 
   // merge into unified rows for display
@@ -66,7 +70,6 @@ const OrderBook = () => {
       {rows.map((row, i) => {
         const buyPercent = (Number(row.buyAmount) / maxBuy) * 50;
         const sellPercent = (Number(row.sellAmount) / maxSell) * 50;
-        console.log({ buyPercent, row, maxBuy, maxSell });
 
         return (
           <div key={i} className="grid grid-cols-4 py-1 text-white relative">
@@ -76,7 +79,7 @@ const OrderBook = () => {
                 style={{ width: `${buyPercent}%` }}
               />
             )}
-            {Number(row.buyAmount) > 0 && (
+            {Number(row.sellAmount) > 0 && (
               <div
                 className="absolute h-full left-1/2 top-0 bg-red-500/20"
                 style={{ width: `${sellPercent}%` }}

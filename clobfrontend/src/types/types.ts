@@ -14,6 +14,7 @@ export interface ItemHistoryOrder {
   bidAskType: string;
   filled: string;
   id: string;
+  idQuery: string;
   isActive: boolean;
   price: string;
   remaining: string;

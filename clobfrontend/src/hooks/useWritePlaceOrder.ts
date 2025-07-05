@@ -12,8 +12,7 @@ export const useWritePlaceOrder = (
   tokenBuy: string,
   tokenSell: string,
   price: string,
-  amount: string,
-  decimals: number
+  amount: string
 ) => {
   const { address } = useAccount();
   const { writeContractAsync } = useWriteContract();
@@ -26,7 +25,7 @@ export const useWritePlaceOrder = (
 
     try {
       const parsedPrice = BigInt(parseFloat(price));
-      const parsedAmount = parseTokenAmount(amount, decimals);
+      const parsedAmount = parseTokenAmount(amount, 6);
       const hash = await writeContractAsync({
         address: CONTRACTS.SETTLEMENT as Address,
         abi: SETTLEMENT_ABI,

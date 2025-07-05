@@ -59,8 +59,7 @@ function Swap({ value, isBid, setIsbid }: SwapProps) {
     tokenBuy,
     tokenSell,
     value,
-    isBid ? expectedAmount : payAmount,
-    selectedPayToken.decimals
+    isBid ? expectedAmount : payAmount
   );
 
   const handleSwapTokens = () => {
