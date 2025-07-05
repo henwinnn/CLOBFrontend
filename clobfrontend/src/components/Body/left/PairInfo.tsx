@@ -13,15 +13,15 @@ function PairInfo() {
         <div className="flex gap-7 items-center justify-between">
           <div className="flex flex-col items-center justify-between">
             <div className="font-bold text-sm text-gray-400">Price</div>
-            <div className="text-lg font-semibold">00.000K</div>
+            <div className="text-lg font-semibold">108.000K</div>
           </div>
           <div className="flex flex-col items-center justify-between">
             <div className="font-bold text-sm text-gray-400">Market Cap</div>
-            <div className="text-lg font-semibold">00.000K</div>
+            <div className="text-lg font-semibold">2.15T</div>
           </div>
           <div className="flex flex-col items-center justify-between">
             <div className="font-bold text-sm text-gray-400">24h Volume</div>
-            <div className="text-lg font-semibold">00.000K</div>
+            <div className="text-lg font-semibold">100</div>
           </div>
         </div>
       </div>

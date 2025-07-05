@@ -7,27 +7,30 @@ const fetchHistoryOrder = async () => {
     body: JSON.stringify({
       query: `
         query MyQuery {
-                historyOrders {
-                    items {
-                    amount
-                    bidAskType
-                    filled
-                    id
-                    isActive
-                    price
-                    remaining
-                    status
-                    timestamp
-                    tokenBuy
-                    tokenSell
-                    user
+  historyOrders {
+    items {
+      amount
+      bidAskType
+      filled
+      id
+      idQuery
+      isActive
+      price
+      remaining
+      status
+      timestamp
+      tokenBuy
+      tokenSell
+      user
     }
   }
-}`,
+}
+            `,
     }),
   });
 
   const { data } = await res.json();
+
   return data.historyOrders;
 };
 
@@ -35,5 +38,6 @@ export const useHistoryOrder = () => {
   return useQuery({
     queryKey: ["historyOrder"],
     queryFn: fetchHistoryOrder,
+    refetchInterval: 5000,
   });
 };

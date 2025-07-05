@@ -4,11 +4,18 @@ import "tailwindcss";
 import { useAccount } from "wagmi";
 import { useReadGetDepositBalance } from "../../../hooks/useReadDepositBalance";
 import { TOKENS } from "../../../constants";
+import { useWritePlaceOrder } from "../../../hooks/useWritePlaceOrder";
+import { formatNumber } from "../../../utils/calculations";
 
-function Swap() {
+type SwapProps = {
+  value: string;
+  isBid: boolean;
+  setIsbid: (open: boolean) => void;
+};
+function Swap({ value, isBid, setIsbid }: SwapProps) {
   const { isConnected } = useAccount();
-  const [payToken, setPayToken] = useState("USDC");
-  const [receiveToken, setReceiveToken] = useState("BTC");
+  const [payToken, setPayToken] = useState<keyof typeof TOKENS>("USDC");
+  const [receiveToken, setReceiveToken] = useState<keyof typeof TOKENS>("BTC");
   const [payAmount, setPayAmount] = useState("");
   const [receiveAmount, setReceiveAmount] = useState("");
   const [showPayDropdown, setShowPayDropdown] = useState(false);
@@ -21,9 +28,39 @@ function Swap() {
   const { balance: receiveTokenBalance } = useReadGetDepositBalance(
     receiveToken === "USDC" ? TOKENS.USDC.address : TOKENS.BTC.address
   );
+  const selectedPayToken = TOKENS[payToken];
+  const selectedReceiveToken = TOKENS[receiveToken];
 
-  console.log("Pay Token Balance:", payTokenBalance);
-  console.log("Receive Token Balance:", receiveTokenBalance);
+  const normalizedBalancePay =
+    Number(payTokenBalance) / 10 ** selectedPayToken.decimals || 0;
+  const normalizedBalanceReceive =
+    Number(receiveTokenBalance) / 10 ** selectedReceiveToken.decimals || 0;
+
+  const tokenSell =
+    payToken === "BTC" ? TOKENS.BTC.address : TOKENS.USDC.address;
+  const tokenBuy =
+    receiveToken === "USDC" ? TOKENS.USDC.address : TOKENS.BTC.address;
+
+  function calcExpectedAmount(
+    isBid: boolean,
+    value: string,
+    payAmount: string
+  ) {
+    if (isBid) {
+      return (Number(payAmount) / Number(value)).toString();
+    } else {
+      return (Number(payAmount) * Number(value)).toString();
+    }
+  }
+  const expectedAmount = calcExpectedAmount(isBid, value, payAmount);
+
+  const { placeOrder } = useWritePlaceOrder(
+    isBid ? 0 : 1,
+    tokenBuy,
+    tokenSell,
+    value,
+    isBid ? expectedAmount : payAmount
+  );
 
   const handleSwapTokens = () => {
     const tempPayToken = payToken;
@@ -33,10 +70,11 @@ function Swap() {
     setReceiveToken(tempPayToken);
     setPayAmount(receiveAmount);
     setReceiveAmount(tempPayAmount);
+    setIsbid(!isBid);
   };
 
   const handlePayTokenSelect = (token: string) => {
-    setPayToken(token);
+    setPayToken(token as "USDC" | "BTC");
     setShowPayDropdown(false);
     // Auto switch receive token if same as pay token
     if (token === receiveToken) {
@@ -45,12 +83,15 @@ function Swap() {
   };
 
   const handleReceiveTokenSelect = (token: string) => {
-    setReceiveToken(token);
+    setReceiveToken(token as "USDC" | "BTC");
     setShowReceiveDropdown(false);
     // Auto switch pay token if same as receive token
     if (token === payToken) {
       setPayToken(receiveToken);
     }
+  };
+  const handlePlaceOrder = () => {
+    placeOrder();
   };
 
   return (
@@ -73,7 +114,7 @@ function Swap() {
                 onClick={() => setShowPayDropdown(!showPayDropdown)}
               >
                 <div
-                  className={payToken === "MON" ? "monadLogo" : "usdcLogo"}
+                  className={payToken === "BTC" ? "monadLogo" : "usdcLogo"}
                 />
                 <div className="flex items-center ml-1 gap-1 content-center justify-between w-full">
                   <span className="">{payToken}</span>
@@ -106,8 +147,11 @@ function Swap() {
           <div className="flex h-14  justify-between  items-start px-4">
             <div>$0.0</div>
             <div className="flex items-center gap-2">
-              <span>Available: {payTokenBalance} </span>
-              <button className="rounded flex items-center bg-white  text-black p-1">
+              <span>Available: {normalizedBalancePay} </span>
+              <button
+                onClick={() => setPayAmount(normalizedBalancePay.toString())}
+                className="rounded flex items-center bg-white  text-black p-1"
+              >
                 MAX
               </button>
             </div>
@@ -128,11 +172,12 @@ function Swap() {
         <div className="bg-custom-blue h-full rounded-2xl content-center items-center">
           <div className="justify-between flex mt-4 items-center">
             <input
-              type="number"
-              value={receiveAmount}
+              type="text"
+              value={formatNumber(expectedAmount)}
               onChange={(e) => setReceiveAmount(e.target.value)}
               className="flex h-14  outline-0 pl-4 w-2/3 text-3xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
               placeholder="0.00"
+              disabled
             />
             <div className="px-4 relative">
               <div
@@ -173,7 +218,7 @@ function Swap() {
           <div className="flex h-14  justify-between  items-start px-4">
             <div>$0.0</div>
             <div className="flex items-center gap-2">
-              <span>Available: {receiveTokenBalance} </span>
+              <span>Available: {normalizedBalanceReceive} </span>
               <button className="rounded flex items-center bg-white  text-black p-1">
                 MAX
               </button>
@@ -183,7 +228,10 @@ function Swap() {
       </div>
 
       {isConnected ? (
-        <button className="flex bg-white rounded justify-center h-16 w-full text-black items-center mt-4">
+        <button
+          className="flex bg-white rounded justify-center h-16 w-full text-black items-center mt-4"
+          onClick={handlePlaceOrder}
+        >
           Swap
         </button>
       ) : (

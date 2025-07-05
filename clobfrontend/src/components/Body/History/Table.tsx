@@ -3,9 +3,24 @@ import "tailwindcss";
 import MarketOrder from "./MarketOrder";
 import { useHistoryOrder } from "../../../hooks/useFetchHistoryOrder";
 import type { ItemHistoryOrder } from "../../../types/types";
+import { useAccount } from "wagmi";
+// import { useBidOrders } from "../../../hooks/useBidOrders";
+// import { useAskOrders } from "../../../hooks/useAskOrders";
+// import { heapSortByPrice } from "../../../utils/calculations";
 
 export default function TableMarket() {
   const { data: dataHistory } = useHistoryOrder();
+  // const { data: bidOrders } = useBidOrders();
+  // const { data: askOrders } = useAskOrders();
+  const { address } = useAccount();
+  const myHistory = dataHistory?.items?.filter((item: ItemHistoryOrder) => {
+    return (
+      item.user.toLocaleLowerCase() == address?.toLowerCase() && item.isActive
+    );
+  });
+
+  // const sortedBid = heapSortByPrice(bidOrders?.items);
+  // const sortedAsk = heapSortByPrice(askOrders?.items);
   return (
     <div>
       {/* market order header */}
@@ -40,8 +55,7 @@ export default function TableMarket() {
       </div>
 
       {/* mapping the market order */}
-
-      {dataHistory?.items?.map((item: ItemHistoryOrder, index: number) => {
+      {myHistory?.map((item: ItemHistoryOrder, index: number) => {
         return <MarketOrder key={index} {...item} />;
       })}
     </div>

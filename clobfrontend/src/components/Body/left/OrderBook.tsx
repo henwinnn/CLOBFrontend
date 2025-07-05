@@ -1,34 +1,61 @@
 import "tailwindcss";
+import { useHistoryOrder } from "../../../hooks/useFetchHistoryOrder";
+import type { ItemHistoryOrder, OrderBookType } from "../../../types/types";
 
 const OrderBook = () => {
-  const buyOrders = [
-    { amount: "124000.0000", price: "1.4700" },
-    { amount: "50000.0000", price: "1.4600" },
-    { amount: "30000.0000", price: "1.4500" },
-    { amount: "10000.0000", price: "1.4400" },
-    { amount: "7000.0000", price: "1.4300" },
-    { amount: "5000.0000", price: "1.4200" },
-    { amount: "3000.0000", price: "1.4100" },
-    { amount: "1000.0000", price: "1.4000" },
-  ];
+  // const bidOrders = [
+  //   { amount: "124000.0000", price: "1.4700" },
+  //   { amount: "50000.0000", price: "1.4600" },
+  //   { amount: "30000.0000", price: "1.4500" },
+  //   { amount: "10000.0000", price: "1.4400" },
+  //   { amount: "7000.0000", price: "1.4300" },
+  //   { amount: "5000.0000", price: "1.4200" },
+  //   { amount: "3000.0000", price: "1.4100" },
+  //   { amount: "1000.0000", price: "1.4000" },
+  // ];
 
-  const sellOrders = [
-    { price: "1.4800", amount: "200.0000" },
-    { price: "1.4900", amount: "150.0000" },
-    { price: "1.5000", amount: "100.0000" },
-    { price: "1.5100", amount: "50.0000" },
-    { price: "1.5200", amount: "25.0000" },
-  ];
+  // const askOrders = [
+  //   { price: "1.4800", amount: "200.0000" },
+  //   { price: "1.4900", amount: "150.0000" },
+  //   { price: "1.5000", amount: "100.0000" },
+  //   { price: "1.5100", amount: "50.0000" },
+  //   { price: "1.5200", amount: "25.0000" },
+  // ];
+  const { data: dataHistory } = useHistoryOrder();
+  const formatOrder = (order: ItemHistoryOrder) =>
+    ({
+      price: parseFloat(order.price),
+      amount: parseFloat(order.remaining) / 1e8,
+    } as OrderBookType);
+
+  const bidOrders =
+    dataHistory?.items
+      ?.filter(
+        (order: ItemHistoryOrder) => order.bidAskType === "0" && order.isActive
+      )
+      .map(formatOrder) ?? [];
+
+  const askOrders =
+    dataHistory?.items
+      ?.filter(
+        (order: ItemHistoryOrder) => order.bidAskType === "1" && order.isActive
+      )
+      .map(formatOrder) ?? [];
 
   // merge into unified rows for display
-  const rowCount = Math.max(buyOrders.length, sellOrders.length);
-  const maxBuy = Math.max(...buyOrders.map((o) => Number(o.amount)));
-  const maxSell = Math.max(...sellOrders.map((o) => Number(o.amount)));
+  const rowCount = Math.max(bidOrders.length, askOrders.length);
+  const maxBuy = Math.max(
+    ...(bidOrders.map((o: OrderBookType) => Number(o.amount)) || [0])
+  );
+  const maxSell = Math.max(
+    ...(askOrders.map((o: OrderBookType) => Number(o.amount)) || [0])
+  );
+
   const rows = Array.from({ length: rowCount }).map((_, i) => ({
-    buyAmount: buyOrders[i]?.amount || "",
-    buyPrice: buyOrders[i]?.price || "",
-    sellPrice: sellOrders[i]?.price || "",
-    sellAmount: sellOrders[i]?.amount || "",
+    buyAmount: bidOrders[i]?.amount || "",
+    buyPrice: bidOrders[i]?.price || "",
+    sellPrice: askOrders[i]?.price || "",
+    sellAmount: askOrders[i]?.amount || "",
   }));
 
   return (
@@ -52,16 +79,24 @@ const OrderBook = () => {
                 style={{ width: `${buyPercent}%` }}
               />
             )}
-            {Number(row.buyAmount) > 0 && (
+            {Number(row.sellAmount) > 0 && (
               <div
                 className="absolute h-full left-1/2 top-0 bg-red-500/20"
                 style={{ width: `${sellPercent}%` }}
               />
             )}
-            <div className="text-left">{row.buyAmount}</div>
+            <div className="text-left">
+              {Number(row.buyAmount).toFixed(8) === "0.00000000"
+                ? ""
+                : Number(row.buyAmount).toFixed(8)}
+            </div>
             <div className="text-green-500 text-center">{row.buyPrice}</div>
             <div className="text-red-500 text-center">{row.sellPrice}</div>
-            <div className="text-right">{row.sellAmount}</div>
+            <div className="text-right">
+              {Number(row.sellAmount).toFixed(8) === "0.00000000"
+                ? ""
+                : Number(row.sellAmount).toFixed(8)}
+            </div>
           </div>
         );
       })}
