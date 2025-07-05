@@ -29,47 +29,47 @@ export function formatNumber(str: string): string {
   });
 }
 
-export function heapSortByPrice(items) {
-  const n = items?.length;
+// export function heapSortByPrice(items) {
+//   const n = items?.length;
 
-  // Build max heap
-  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
-    heapify(items, n, i);
-  }
+//   // Build max heap
+//   for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+//     heapify(items, n, i);
+//   }
 
-  // Extract elements from heap one by one
-  for (let i = n - 1; i > 0; i--) {
-    // Swap root (max) with end
-    [items[0], items[i]] = [items[i], items[0]];
+//   // Extract elements from heap one by one
+//   for (let i = n - 1; i > 0; i--) {
+//     // Swap root (max) with end
+//     [items[0], items[i]] = [items[i], items[0]];
 
-    // Call heapify on the reduced heap
-    heapify(items, i, 0);
-  }
+//     // Call heapify on the reduced heap
+//     heapify(items, i, 0);
+//   }
 
-  return items;
-}
+//   return items;
+// }
 
-export function heapify(arr, n, i) {
-  let largest = i;
-  const left = 2 * i + 1;
-  const right = 2 * i + 2;
+// export function heapify(arr, n, i) {
+//   let largest = i;
+//   const left = 2 * i + 1;
+//   const right = 2 * i + 2;
 
-  // Compare with left child
-  if (left < n && Number(arr[left].price) > Number(arr[largest].price)) {
-    largest = left;
-  }
+//   // Compare with left child
+//   if (left < n && Number(arr[left].price) > Number(arr[largest].price)) {
+//     largest = left;
+//   }
 
-  // Compare with right child
-  if (right < n && Number(arr[right].price) > Number(arr[largest].price)) {
-    largest = right;
-  }
+//   // Compare with right child
+//   if (right < n && Number(arr[right].price) > Number(arr[largest].price)) {
+//     largest = right;
+//   }
 
-  // If largest is not root
-  if (largest !== i) {
-    [arr[i], arr[largest]] = [arr[largest], arr[i]];
-    heapify(arr, n, largest);
-  }
-}
+//   // If largest is not root
+//   if (largest !== i) {
+//     [arr[i], arr[largest]] = [arr[largest], arr[i]];
+//     heapify(arr, n, largest);
+//   }
+// }
 
 // type Order = {
 //   bidId: number;

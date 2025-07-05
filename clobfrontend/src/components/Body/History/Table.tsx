@@ -4,14 +4,14 @@ import MarketOrder from "./MarketOrder";
 import { useHistoryOrder } from "../../../hooks/useFetchHistoryOrder";
 import type { ItemHistoryOrder } from "../../../types/types";
 import { useAccount } from "wagmi";
-import { useBidOrders } from "../../../hooks/useBidOrders";
-import { useAskOrders } from "../../../hooks/useAskOrders";
-import { heapSortByPrice, matchOrders } from "../../../utils/calculations";
+// import { useBidOrders } from "../../../hooks/useBidOrders";
+// import { useAskOrders } from "../../../hooks/useAskOrders";
+// import { heapSortByPrice } from "../../../utils/calculations";
 
 export default function TableMarket() {
   const { data: dataHistory } = useHistoryOrder();
-  const { data: bidOrders } = useBidOrders();
-  const { data: askOrders } = useAskOrders();
+  // const { data: bidOrders } = useBidOrders();
+  // const { data: askOrders } = useAskOrders();
   const { address } = useAccount();
   const myHistory = dataHistory?.items?.filter((item: ItemHistoryOrder) => {
     return (
@@ -19,8 +19,8 @@ export default function TableMarket() {
     );
   });
 
-  const sortedBid = heapSortByPrice(bidOrders?.items);
-  const sortedAsk = heapSortByPrice(askOrders?.items);
+  // const sortedBid = heapSortByPrice(bidOrders?.items);
+  // const sortedAsk = heapSortByPrice(askOrders?.items);
   return (
     <div>
       {/* market order header */}
