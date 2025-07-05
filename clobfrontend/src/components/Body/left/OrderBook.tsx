@@ -33,14 +33,16 @@ const OrderBook = () => {
       ?.filter(
         (order: ItemHistoryOrder) => order.bidAskType === "0" && order.isActive
       )
-      .map(formatOrder) ?? [];
+      .map(formatOrder)
+      .sort((a: OrderBookType, b: OrderBookType) => b.price - a.price) ?? [];
 
   const askOrders =
     dataHistory?.items
       ?.filter(
         (order: ItemHistoryOrder) => order.bidAskType === "1" && order.isActive
       )
-      .map(formatOrder) ?? [];
+      .map(formatOrder)
+      .sort((a: OrderBookType, b: OrderBookType) => a.price - b.price) ?? [];
 
   // merge into unified rows for display
   const rowCount = Math.max(bidOrders.length, askOrders.length);
