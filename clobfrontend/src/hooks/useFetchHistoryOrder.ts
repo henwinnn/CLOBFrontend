@@ -39,5 +39,6 @@ export const useHistoryOrder = () => {
   return useQuery({
     queryKey: ["historyOrder"],
     queryFn: fetchHistoryOrder,
+    refetchInterval: 5000,
   });
 };
