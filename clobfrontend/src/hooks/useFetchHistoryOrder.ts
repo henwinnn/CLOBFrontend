@@ -7,27 +7,31 @@ const fetchHistoryOrder = async () => {
     body: JSON.stringify({
       query: `
         query MyQuery {
-                historyOrders {
-                    items {
-                    amount
-                    bidAskType
-                    filled
-                    id
-                    isActive
-                    price
-                    remaining
-                    status
-                    timestamp
-                    tokenBuy
-                    tokenSell
-                    user
+  historyOrders {
+    items {
+      amount
+      bidAskType
+      filled
+      id
+      idQuery
+      isActive
+      price
+      remaining
+      status
+      timestamp
+      tokenBuy
+      tokenSell
+      user
     }
   }
-}`,
+}
+            `,
     }),
   });
 
   const { data } = await res.json();
+  console.log("data", data);
+
   return data.historyOrders;
 };
 
