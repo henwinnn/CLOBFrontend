@@ -1,3 +1,5 @@
+import type { ItemHistoryOrder } from "../types/types";
+
 export const parseTokenAmount = (amount: string, decimals: number): bigint => {
   if (!amount || amount === "0" || amount === ".") {
     return BigInt(0);
@@ -134,3 +136,29 @@ export function formatNumber(str: string): string {
 
 //   return matches;
 // }
+
+export function findMatchingOrders(
+  bids: ItemHistoryOrder[],
+  asks: ItemHistoryOrder[]
+) {
+  const matches = [];
+
+  for (const bid of bids) {
+    for (const ask of asks) {
+      if (
+        Number(bid.price) >= Number(ask.price) && // price match condition
+        bid.tokenBuy === ask.tokenSell &&
+        bid.tokenSell === ask.tokenBuy
+      ) {
+        matches.push({
+          bidId: bid.id,
+          askId: ask.id,
+          price: ask.price,
+          quantity: Math.min(Number(bid.remaining), Number(ask.remaining)),
+        });
+      }
+    }
+  }
+
+  return matches;
+}

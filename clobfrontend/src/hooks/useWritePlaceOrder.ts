@@ -38,7 +38,7 @@ export const useWritePlaceOrder = (
       await waitForTransactionReceipt(config, { hash });
 
       toast.success(
-        `Successfully placed order for ${amount} ${tokenBuy} at ${price}`,
+        `Successfully placed order for ${amount} of $BTC at ${price}`,
         {
           id: "placeOrder",
           duration: 5000,

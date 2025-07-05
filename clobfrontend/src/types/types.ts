@@ -24,3 +24,10 @@ export interface ItemHistoryOrder {
   tokenSell: string;
   user: string;
 }
+
+export interface Match {
+  bidId: string;
+  askId: string;
+  price: string;
+  quantity: number;
+}
