@@ -4,6 +4,10 @@ export interface Token {
   name: string;
   decimals: number;
 }
+export interface OrderBookType {
+  amount: number;
+  price: number;
+}
 
 export interface ItemHistoryOrder {
   amount: string;
