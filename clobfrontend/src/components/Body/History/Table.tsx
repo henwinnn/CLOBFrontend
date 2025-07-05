@@ -4,13 +4,20 @@ import MarketOrder from "./MarketOrder";
 import { useHistoryOrder } from "../../../hooks/useFetchHistoryOrder";
 import type { ItemHistoryOrder } from "../../../types/types";
 import { useAccount } from "wagmi";
+import { useBidOrders } from "../../../hooks/useBidOrders";
+import { useAskOrders } from "../../../hooks/useAskOrders";
 
 export default function TableMarket() {
   const { data: dataHistory } = useHistoryOrder();
+  const { data: bidOrders } = useBidOrders();
+  const { data: askOrders } = useAskOrders();
   const { address } = useAccount();
   const myHistory = dataHistory?.items?.filter((item: ItemHistoryOrder) => {
     return item.user.toLocaleLowerCase() == address?.toLowerCase();
   });
+
+  console.log("bidOrders", bidOrders);
+  console.log("askOrders", askOrders);
   // useEffect(() => {}, [myHistory]);
   return (
     <div>
