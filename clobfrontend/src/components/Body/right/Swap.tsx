@@ -5,11 +5,17 @@ import { useAccount } from "wagmi";
 import { useReadGetDepositBalance } from "../../../hooks/useReadDepositBalance";
 import { TOKENS } from "../../../constants";
 import { useWritePlaceOrder } from "../../../hooks/useWritePlaceOrder";
+import { formatNumber } from "../../../utils/calculations";
 
-function Swap({ value }) {
+type SwapProps = {
+  value: string;
+  isBid: boolean;
+  setIsbid: (open: boolean) => void;
+};
+function Swap({ value, isBid, setIsbid }: SwapProps) {
   const { isConnected } = useAccount();
-  const [payToken, setPayToken] = useState("USDC");
-  const [receiveToken, setReceiveToken] = useState("BTC");
+  const [payToken, setPayToken] = useState<keyof typeof TOKENS>("USDC");
+  const [receiveToken, setReceiveToken] = useState<keyof typeof TOKENS>("BTC");
   const [payAmount, setPayAmount] = useState("");
   const [receiveAmount, setReceiveAmount] = useState("");
   const [showPayDropdown, setShowPayDropdown] = useState(false);
@@ -22,7 +28,6 @@ function Swap({ value }) {
   const { balance: receiveTokenBalance } = useReadGetDepositBalance(
     receiveToken === "USDC" ? TOKENS.USDC.address : TOKENS.BTC.address
   );
-
   const selectedPayToken = TOKENS[payToken];
   const selectedReceiveToken = TOKENS[receiveToken];
 
@@ -31,21 +36,31 @@ function Swap({ value }) {
   const normalizedBalanceReceive =
     Number(receiveTokenBalance) / 10 ** selectedReceiveToken.decimals || 0;
 
-  const bidAskType = receiveToken === "BTC" ? "0" : "1"; // 0 for USDC, 1 for BTC
   const tokenSell =
     payToken === "BTC" ? TOKENS.BTC.address : TOKENS.USDC.address;
   const tokenBuy =
     receiveToken === "USDC" ? TOKENS.USDC.address : TOKENS.BTC.address;
 
-  console.log("payToken", payToken);
-  console.log("receiveToken", receiveToken);
+  function calcExpectedAmount(
+    isBid: boolean,
+    value: string,
+    payAmount: string
+  ) {
+    if (isBid) {
+      return (Number(payAmount) / Number(value)).toString();
+    } else {
+      return (Number(payAmount) * Number(value)).toString();
+    }
+  }
+  const expectedAmount = calcExpectedAmount(isBid, value, payAmount);
 
   const { placeOrder } = useWritePlaceOrder(
-    bidAskType,
+    isBid ? 0 : 1,
     tokenBuy,
     tokenSell,
     value,
-    payAmount
+    isBid ? expectedAmount : payAmount,
+    selectedPayToken.decimals
   );
 
   const handleSwapTokens = () => {
@@ -56,10 +71,11 @@ function Swap({ value }) {
     setReceiveToken(tempPayToken);
     setPayAmount(receiveAmount);
     setReceiveAmount(tempPayAmount);
+    setIsbid(!isBid);
   };
 
   const handlePayTokenSelect = (token: string) => {
-    setPayToken(token);
+    setPayToken(token as "USDC" | "BTC");
     setShowPayDropdown(false);
     // Auto switch receive token if same as pay token
     if (token === receiveToken) {
@@ -68,7 +84,7 @@ function Swap({ value }) {
   };
 
   const handleReceiveTokenSelect = (token: string) => {
-    setReceiveToken(token);
+    setReceiveToken(token as "USDC" | "BTC");
     setShowReceiveDropdown(false);
     // Auto switch pay token if same as receive token
     if (token === payToken) {
@@ -99,7 +115,7 @@ function Swap({ value }) {
                 onClick={() => setShowPayDropdown(!showPayDropdown)}
               >
                 <div
-                  className={payToken === "MON" ? "monadLogo" : "usdcLogo"}
+                  className={payToken === "BTC" ? "monadLogo" : "usdcLogo"}
                 />
                 <div className="flex items-center ml-1 gap-1 content-center justify-between w-full">
                   <span className="">{payToken}</span>
@@ -133,7 +149,10 @@ function Swap({ value }) {
             <div>$0.0</div>
             <div className="flex items-center gap-2">
               <span>Available: {normalizedBalancePay} </span>
-              <button className="rounded flex items-center bg-white  text-black p-1">
+              <button
+                onClick={() => setPayAmount(normalizedBalancePay.toString())}
+                className="rounded flex items-center bg-white  text-black p-1"
+              >
                 MAX
               </button>
             </div>
@@ -154,8 +173,8 @@ function Swap({ value }) {
         <div className="bg-custom-blue h-full rounded-2xl content-center items-center">
           <div className="justify-between flex mt-4 items-center">
             <input
-              type="number"
-              value={receiveAmount}
+              type="text"
+              value={formatNumber(expectedAmount)}
               onChange={(e) => setReceiveAmount(e.target.value)}
               className="flex h-14  outline-0 pl-4 w-2/3 text-3xl [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
               placeholder="0.00"

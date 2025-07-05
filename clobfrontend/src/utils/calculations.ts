@@ -19,3 +19,12 @@ export const parseTokenAmount = (amount: string, decimals: number): bigint => {
     return BigInt(0);
   }
 };
+
+export function formatNumber(str: string): string {
+  const num = Number(str.replace(/,/g, "")); // just in case
+  if (isNaN(num)) return "";
+  return num.toLocaleString("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 8,
+  });
+}
