@@ -15,7 +15,13 @@ function Right() {
         <span className="text-custom-green">(0.01%)</span>
         <div className="mb-4">
           <span>Set to market rate </span>
-          <span className="rounded10px bgRed30 h-3 px-3 text-xs">{bidAsk}</span>
+          <span
+            className={`rounded10px h-3 px-3 text-xs ${
+              isBid ? "bg-green-700" : "bg-red-700"
+            }`}
+          >
+            {bidAsk}
+          </span>
         </div>
 
         <InputMarket value={value} setValue={setValue} />

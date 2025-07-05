@@ -22,10 +22,9 @@ export const useWritePlaceOrder = (
     if (!address) return false;
 
     setIsLoading(true);
-
     try {
       const parsedPrice = BigInt(parseFloat(price));
-      const parsedAmount = parseTokenAmount(amount, 6);
+      const parsedAmount = parseTokenAmount(amount, 8);
       const hash = await writeContractAsync({
         address: CONTRACTS.SETTLEMENT as Address,
         abi: SETTLEMENT_ABI,
@@ -39,7 +38,7 @@ export const useWritePlaceOrder = (
       await waitForTransactionReceipt(config, { hash });
 
       toast.success(
-        `Successfully placed order for ${amount} ${tokenBuy} at ${price}`,
+        `Successfully placed order for ${amount} of $BTC at ${price}`,
         {
           id: "placeOrder",
           duration: 5000,

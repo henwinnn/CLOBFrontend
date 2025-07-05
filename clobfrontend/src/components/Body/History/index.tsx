@@ -1,6 +1,6 @@
 import "tailwindcss";
 import Top from "./top";
-import TableMarket from "./Table";
+import { TableMarket } from "./Table";
 
 function History() {
   return (
