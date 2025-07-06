@@ -28,21 +28,53 @@ const OrderBook = () => {
       amount: parseFloat(order.remaining) / 1e8,
     } as OrderBookType);
 
-  const bidOrders =
-    dataHistory?.items
-      ?.filter(
-        (order: ItemHistoryOrder) => order.bidAskType === "0" && order.isActive
-      )
-      .map(formatOrder)
-      .sort((a: OrderBookType, b: OrderBookType) => b.price - a.price) ?? [];
+  const groupedBids = dataHistory?.items
+    ?.filter(
+      (order: ItemHistoryOrder) => order.bidAskType === "0" && order.isActive
+    )
+    .map(formatOrder)
+    .reduce((acc: Record<number, OrderBookType>, order: OrderBookType) => {
+      const key = order.price;
+      if (!acc[key]) {
+        acc[key] = { ...order };
+      } else {
+        acc[key].amount += order.amount;
+      }
+      return acc;
+    }, {} as Record<number, OrderBookType>);
 
-  const askOrders =
-    dataHistory?.items
-      ?.filter(
-        (order: ItemHistoryOrder) => order.bidAskType === "1" && order.isActive
+  const bidOrders = groupedBids
+    ? (Object.values(groupedBids) as OrderBookType[]).sort(
+        (a, b) => b.price - a.price
       )
-      .map(formatOrder)
-      .sort((a: OrderBookType, b: OrderBookType) => a.price - b.price) ?? [];
+    : [];
+  const groupedAsks = dataHistory?.items
+    ?.filter(
+      (order: ItemHistoryOrder) => order.bidAskType === "1" && order.isActive
+    )
+    .map(formatOrder)
+    .reduce((acc: Record<number, OrderBookType>, order: OrderBookType) => {
+      const key = order.price;
+      if (!acc[key]) {
+        acc[key] = { ...order };
+      } else {
+        acc[key].amount += order.amount;
+      }
+      return acc;
+    }, {} as Record<number, OrderBookType>);
+
+  const askOrders = groupedAsks
+    ? (Object.values(groupedAsks) as OrderBookType[]).sort(
+        (a, b) => a.price - b.price
+      )
+    : [];
+  // const askOrders =
+  //   dataHistory?.items
+  //     ?.filter(
+  //       (order: ItemHistoryOrder) => order.bidAskType === "1" && order.isActive
+  //     )
+  //     .map(formatOrder)
+  //     .sort((a: OrderBookType, b: OrderBookType) => a.price - b.price) ?? [];
 
   // merge into unified rows for display
   const rowCount = Math.max(bidOrders.length, askOrders.length);

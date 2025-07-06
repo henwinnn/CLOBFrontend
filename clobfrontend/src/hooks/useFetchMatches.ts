@@ -11,18 +11,16 @@ const useFetchMatches = (
   price: string,
   matches: Match[]
 ) => {
-  console.log({ bidId, askId, quantity, price });
   //   const [data, setData] = useState<TokenInfo | null>(null)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  console.log(
-    `https://clobponder.onrender.com/batch-fill?bidId=${bidId}&askId=${askId}&quantity=${quantity}&price=${price}`
-  );
+  //   console.log(
+  //     `https://clobponder.onrender.com/batch-fill?bidId=${bidId}&askId=${askId}&quantity=${quantity}&price=${price}`
+  //   );
 
   useEffect(() => {
     if (!bidId || !askId || !quantity || !price) return;
 
-    console.log("masuk");
     const fetchTokenData = async () => {
       try {
         // https://cloutponder.onrender.com/token/${pair}

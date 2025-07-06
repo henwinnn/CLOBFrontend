@@ -4,16 +4,16 @@ import MarketOrder from "./MarketOrder";
 import { useHistoryOrder } from "../../../hooks/useFetchHistoryOrder";
 import type { ItemHistoryOrder } from "../../../types/types";
 import { useAccount } from "wagmi";
-import { useBidOrders } from "../../../hooks/useBidOrders";
-import { useAskOrders } from "../../../hooks/useAskOrders";
+// import { useBidOrders } from "../../../hooks/useBidOrders";
+// import { useAskOrders } from "../../../hooks/useAskOrders";
 import { findMatchingOrders } from "../../../utils/calculations";
 import useFetchMatches from "../../../hooks/useFetchMatches";
 // import { heapSortByPrice } from "../../../utils/calculations";
 
 export function TableMarket() {
   const { data: dataHistory } = useHistoryOrder();
-  const { data: bidOrders } = useBidOrders();
-  const { data: askOrders } = useAskOrders();
+  // const { data: bidOrders } = useBidOrders();
+  // const { data: askOrders } = useAskOrders();
   const { address } = useAccount();
   const myHistory = dataHistory?.items?.filter((item: ItemHistoryOrder) => {
     return (
@@ -29,7 +29,7 @@ export function TableMarket() {
   const activeAskOrders = activeOrders?.filter(
     (item: ItemHistoryOrder) => item.bidAskType === "1"
   );
-  console.log({ activeBidOrders, activeAskOrders });
+  // console.log({ activeBidOrders, activeAskOrders });
   const matches = findMatchingOrders(
     Array.isArray(activeBidOrders) ? activeBidOrders : [],
     Array.isArray(activeAskOrders) ? activeAskOrders : []
@@ -45,7 +45,7 @@ export function TableMarket() {
   // });
   // const sortedBid = heapSortByPrice(bidOrders?.items);
   // const sortedAsk = heapSortByPrice(askOrders?.items);
-  console.log({ dataHistory, bidOrders, askOrders, activeOrders });
+  // console.log({ dataHistory, bidOrders, askOrders, activeOrders });
   return (
     <div>
       {/* market order header */}
