@@ -29,11 +29,11 @@ export function TableMarket() {
   const activeAskOrders = activeOrders?.filter(
     (item: ItemHistoryOrder) => item.bidAskType === "1"
   );
-  // console.log({ activeBidOrders, activeAskOrders });
   const matches = findMatchingOrders(
     Array.isArray(activeBidOrders) ? activeBidOrders : [],
     Array.isArray(activeAskOrders) ? activeAskOrders : []
   );
+  console.log({ matches });
   // matches.forEach((match) => {
   useFetchMatches(
     matches[0]?.bidId,

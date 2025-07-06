@@ -6,26 +6,26 @@ const fetchHistoryOrder = async () => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: `
-        query MyQuery {
-  historyOrders {
-    items {
-      amount
-      bidAskType
-      filled
-      id
-      idQuery
-      isActive
-      price
-      remaining
-      status
-      timestamp
-      tokenBuy
-      tokenSell
-      user
+  query MyQuery {
+    historyOrders(limit: 1000) {
+      items {
+        amount
+        bidAskType
+        filled
+        id
+        idQuery
+        isActive
+        price
+        remaining
+        status
+        timestamp
+        tokenBuy
+        tokenSell
+        user
+      }
     }
   }
-}
-            `,
+`,
     }),
   });
 
