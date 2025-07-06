@@ -25,6 +25,7 @@ export const useWritePlaceOrder = (
     try {
       const parsedPrice = BigInt(parseFloat(price));
       const parsedAmount = parseTokenAmount(amount, 8);
+      console.log({ parsedAmount });
       const hash = await writeContractAsync({
         address: CONTRACTS.SETTLEMENT as Address,
         abi: SETTLEMENT_ABI,
